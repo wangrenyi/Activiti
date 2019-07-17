@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="mysql">
+
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />	
+		
+		<plugin type="com.activiti.mybatis.FuzzySearchPlugin" />	
+
+		<jdbcConnection
+			connectionURL="jdbc:mysql://localhost:3306/mybatis?serverTimezone=GMT%2B8&amp;nullCatalogMeansCurrent=true"
+			driverClass="com.mysql.jdbc.Driver" password="root" userId="root">
+			<property name="useInformationSchema" value="true" />
+		</jdbcConnection>
+
+		<javaModelGenerator
+			targetPackage="com.activiti.table" targetProject="activiti" />
+
+<!-- 		<sqlMapGenerator
+			targetPackage="com.persistence.mapper"
+			targetProject="mybatis/src/main/resources" /> -->
+
+		<sqlMapGenerator
+			targetPackage="com.activiti.mapper"
+			targetProject="activiti/src/main/java" />
+
+		<javaClientGenerator
+			targetPackage="com.activiti.mapper"
+			targetProject="activiti/src/main/java" type="XMLMAPPER" />
+			
+		<table tableName="user">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+		</table>
+
+<!-- 		<table tableName="demo">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="MySql"
+				identity="true" />
+		</table>
+		<table tableName="demo02">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="loginId" sqlStatement="MySql" />
+		</table>
+		<table tableName="demo03">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id"
+				sqlStatement="select replace(uuid(), '-', '')" />
+		</table>
+
+		<table tableName="vw_deom">
+			<property name="useActualColumnNames" value="true" />
+		</table> -->
+
+	</context>
+</generatorConfiguration>

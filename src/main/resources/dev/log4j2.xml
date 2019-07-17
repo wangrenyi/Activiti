@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="logFolder">/data/app/activiti/logs/</Property>
+		<Property name="applog">${logFolder}app.log</Property>
+		<Property name="springlog">${logFolder}spring.log</Property>
+		<Property name="mybatislog">${logFolder}mybatis.log</Property>
+		<Property name="activitilog">${logFolder}activiti.log</Property>
+	</Properties>
+
+	<appenders>
+		<console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</console>
+
+		<RollingFile name="applog" fileName="${applog}"
+			filePattern="${logFolder}/app-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="%d{MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+		</RollingFile>
+
+		<RollingFile name="springlog" fileName="${springlog}"
+			filePattern="${logFolder}/spring-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="%d{MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+		</RollingFile>
+
+		<RollingFile name="mybatislog" fileName="${mybatislog}"
+			filePattern="${logFolder}/mybatis-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="%d{MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+		</RollingFile>
+		
+		<RollingFile name="activitilog" fileName="${activitilog}"
+			filePattern="${logFolder}/activiti-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+		</RollingFile>
+	</appenders>
+
+	<loggers>
+		<logger name="com.activiti" level="DEBUG" additivity="false">
+			<appender-ref ref="applog" />
+			<appender-ref level="DEBUG" ref="console" />
+		</logger>
+		<logger name="org.springframework" level="DEBUG" additivity="false">
+			<appender-ref ref="springlog" />
+			<appender-ref level="WARN" ref="console" />
+		</logger>
+		<logger name="org.mybatis" level="DEBUG" additivity="false">
+			<appender-ref ref="mybatislog" />
+			<appender-ref level="WARN" ref="console" />
+		</logger>
+		<logger name="org.activiti" level="DEBUG" additivity="false">
+			<appender-ref ref="activitilog" />
+			<appender-ref level="WARN" ref="console" />
+		</logger>
+	</loggers>
+
+</configuration>

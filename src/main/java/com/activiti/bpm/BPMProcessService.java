@@ -1,0 +1,71 @@
+package com.activiti.bpm;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.ZipInputStream;
+
+import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.DeploymentBuilder;
+import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.activiti.exception.SystemException;
+import com.activiti.model.ActReDeployment;
+
+@Service
+@Transactional(readOnly = true)
+public class BPMProcessService extends BPMBasicService {
+    private static Logger LOG = LoggerFactory.getLogger(BPMProcessService.class);
+
+    @Transactional
+    public void deployProcess(ActReDeployment actReDeployment, MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        String extension = FilenameUtils.getExtension(fileName);
+
+        try {
+            InputStream fileInputStream = file.getInputStream();
+
+            if (extension.equals("zip") || extension.equals("bar")) {
+                this.deployZip(actReDeployment, fileInputStream);
+            } else if (extension.equals("bpmn")) {
+                String baseName = FilenameUtils.getBaseName(fileName);
+                this.deployFile(actReDeployment, baseName + ".bpmn20.xml", fileInputStream);
+            } else if (extension.equals("xml")) {
+                this.deployFile(actReDeployment, fileName, fileInputStream);
+            }
+        } catch (IOException e) {
+            throw new SystemException("File loading exception.", e);
+        }
+
+    }
+
+    private Deployment deployZip(ActReDeployment actReDeployment, InputStream fileInputStream) {
+        ZipInputStream zipInputStream = new ZipInputStream(fileInputStream);
+
+        DeploymentBuilder deployment = repositoryService.createDeployment();
+        return deployment.name(actReDeployment.getName()).category(actReDeployment.getCategory())
+            .key(actReDeployment.getKey()).addZipInputStream(zipInputStream).deploy();
+    }
+
+    private Deployment deployFile(ActReDeployment actReDeployment, String resourceName, InputStream fileInputStream)
+        throws FileNotFoundException {
+        DeploymentBuilder deployment = processEngine.getRepositoryService().createDeployment();
+
+        return deployment.name(actReDeployment.getName()).category(actReDeployment.getCategory())
+            .key(actReDeployment.getKey()).addInputStream(resourceName, fileInputStream).deploy();
+    }
+
+    private Deployment deployFile(ActReDeployment actReDeployment, String resourceName, String filePath)
+        throws FileNotFoundException {
+        DeploymentBuilder deployment = processEngine.getRepositoryService().createDeployment();
+
+        return deployment.name(actReDeployment.getName()).category(actReDeployment.getCategory())
+            .key(actReDeployment.getKey()).addInputStream(resourceName, new FileInputStream(filePath)).deploy();
+    }
+}
