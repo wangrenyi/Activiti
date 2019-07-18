@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="test_audit" name="流程审批测试流程" isExecutable="true">
+  <process id="activiti-employee-manage-key" name="activiti-employee-manage" isExecutable="true">
     <startEvent id="start" name="启动审批" activiti:initiator="apply" activiti:formKey="/oa/testAudit/form"></startEvent>
     <endEvent id="end" name="结束审批"></endEvent>
     <userTask id="modify" name="员工薪酬档级修改" activiti:assignee="${apply}"></userTask>
@@ -52,8 +52,8 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${pass==0}]]></conditionExpression>
     </sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_test_audit">
-    <bpmndi:BPMNPlane bpmnElement="test_audit" id="BPMNPlane_test_audit">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_activiti-employee-manage-key">
+    <bpmndi:BPMNPlane bpmnElement="activiti-employee-manage-key" id="BPMNPlane_activiti-employee-manage-key">
       <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
         <omgdc:Bounds height="35.0" width="35.0" x="10.0" y="240.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
@@ -151,7 +151,7 @@
         <omgdi:waypoint x="142.0" y="65.0"></omgdi:waypoint>
         <omgdi:waypoint x="142.0" y="219.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="18.0" width="60.0" x="236.0" y="28.0"></omgdc:Bounds>
+          <omgdc:Bounds height="18.0" width="60.0" x="171.0" y="45.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-A7589084-4623-4FEA-A774-00A70DDC1D20" id="BPMNEdge_sid-A7589084-4623-4FEA-A774-00A70DDC1D20">
@@ -194,7 +194,7 @@
         <omgdi:waypoint x="997.0" y="65.0"></omgdi:waypoint>
         <omgdi:waypoint x="997.0" y="347.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="18.0" width="30.0" x="278.0" y="28.0"></omgdc:Bounds>
+          <omgdc:Bounds height="18.0" width="30.0" x="293.0" y="45.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
