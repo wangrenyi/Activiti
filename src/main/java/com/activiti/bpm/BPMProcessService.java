@@ -82,9 +82,14 @@ public class BPMProcessService extends BPMBasicService {
             .key(actReDeployment.getKey()).addZipInputStream(zipInputStream).deploy();
     }
 
+    private Deployment deployClassPathFile(ActReDeployment actReDeployment, String resourceName) {
+        DeploymentBuilder deployment = repositoryService.createDeployment();
+        return deployment.addClasspathResource(resourceName).name(actReDeployment.getName()).deploy();
+    }
+
     private Deployment deployFile(ActReDeployment actReDeployment, String resourceName, InputStream fileInputStream)
         throws FileNotFoundException {
-        DeploymentBuilder deployment = processEngine.getRepositoryService().createDeployment();
+        DeploymentBuilder deployment = repositoryService.createDeployment();
 
         return deployment.name(actReDeployment.getName()).category(actReDeployment.getCategory())
             .key(actReDeployment.getKey()).addInputStream(resourceName, fileInputStream).deploy();
@@ -92,7 +97,7 @@ public class BPMProcessService extends BPMBasicService {
 
     private Deployment deployFile(ActReDeployment actReDeployment, String resourceName, String filePath)
         throws FileNotFoundException {
-        DeploymentBuilder deployment = processEngine.getRepositoryService().createDeployment();
+        DeploymentBuilder deployment = repositoryService.createDeployment();
 
         return deployment.name(actReDeployment.getName()).category(actReDeployment.getCategory())
             .key(actReDeployment.getKey()).addInputStream(resourceName, new FileInputStream(filePath)).deploy();
