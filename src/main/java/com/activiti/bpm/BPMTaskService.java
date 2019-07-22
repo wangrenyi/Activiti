@@ -180,10 +180,10 @@ public class BPMTaskService extends BPMBasicService {
         if (task == null) {
             identityService.setAuthenticatedUserId(taskParameter.getUserId());
 
+            taskService.addCandidateUser(taskParameter.getTaskIdOrDefKey(), taskParameter.getUserId());
             if (assignee != null) {
                 taskService.deleteCandidateUser(taskParameter.getTaskIdOrDefKey(), assignee);
             }
-            taskService.addCandidateUser(taskParameter.getTaskIdOrDefKey(), taskParameter.getUserId());
 
             addComment(taskParameter.getTaskIdOrDefKey(), taskParameter.getProcessInsId(),
                 taskParameter.getCommentAction(), taskParameter.getComment());
